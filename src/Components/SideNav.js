@@ -29,6 +29,7 @@ const NavButton = ({name, selected, onClick,Icon}) => {
         alignItems="center"
         onClick={onClick}
         _focus=""
+        fontWeight="500"
         bg={selected && "purple.50"}
 
     >
@@ -53,6 +54,7 @@ const NavIconButton = ({Icon, selected}) => {
             bg: "purple.50",
             color: "purple.500"
         }}
+        
 
     >
 
