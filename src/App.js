@@ -24,7 +24,7 @@ const App = () => {
           <Switch>
             <Route exact path="/home" component={Home}/>
             <Route exact path="/tasks" component={Tasks}/>
-            <Route exact path="/timer" component={ZenMode}/>
+            <Route exact path="/study" component={ZenMode}/>
             <Route exact path="/calendar" component={Calendar}/>
             <Route exact path="/insights" component={Insights}/>
             <Route exact path="/" component={Home}/>

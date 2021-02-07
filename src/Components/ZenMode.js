@@ -83,7 +83,7 @@ const ZenMode = () => {
                     colorScheme="blue"
                     isRound style={active? {width: "80px", height: "80px"} : {width: "80px", height: "80px", backgroundColor: "gray"}}
                 />
-                <CircularProgress value={t} className="home-progress" size="250px">
+                <CircularProgress value={t} className="home-progress" size="250px" thickness="4px" color="purple.500">
                     <CircularProgressLabel>
                         <div onClick={() => setPaused(!paused)}>
                             {paused?

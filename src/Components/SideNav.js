@@ -10,7 +10,7 @@ import logo from "../logo2.png"
 
 const NavKeys = [
     {name: "Home", icon: BsFillHouseDoorFill, link: "/home"},
-    {name: "Sick Mode", icon: TimeIcon, link: "/timer"},
+    {name: "Study Mode", icon: TimeIcon, link: "/study"},
     {name: "Tasks Manager", icon: CheckIcon, link: "/tasks"},
     {name: "Calendar", icon: CalendarIcon, link: "/calendar"},
     {name: "Insights", icon: StarIcon, link: "/insights"}
@@ -86,7 +86,7 @@ const Nav = () => {
             direction="column"
             alignItems="center"
         >
-            <LinkBox alignSelf="flex-start" m="10px "w="60px" w="60px">
+            <LinkBox m="10px "w="80px" w="80px">
                 <LinkOverlay href="/">
                     <Image 
                         src={logo}
@@ -96,7 +96,7 @@ const Nav = () => {
 
             <Box 
             w='100%'
-            mt="20"
+            mt="16"
             >
             
                 {selected && NavKeys.map((key) =>
