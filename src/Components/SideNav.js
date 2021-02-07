@@ -1,40 +1,43 @@
 import React, {useState} from 'react'
+import {Link} from 'react-router-dom'
 
 import {Box, Flex, Button, Image, IconButton, Avatar, Text} from "@chakra-ui/react"
-import {CheckIcon, CalendarIcon, SettingsIcon, ViewIcon, StarIcon} from "@chakra-ui/icons"
+import {LinkOverlay, LinkBox} from "@chakra-ui/react"
+import {CheckIcon, CalendarIcon, SettingsIcon, ViewIcon, StarIcon, Icon} from "@chakra-ui/icons"
+import {BsFillHouseDoorFill} from "react-icons/bs"
 
 import logo from "../logo2.png"
 
 const NavKeys = [
-    {name: "Tasks", icon: CheckIcon},
-    {name: "Calendar", icon: CalendarIcon},
-    {name: "Insights", icon: StarIcon}
+    {name: "Home", icon: BsFillHouseDoorFill, link: "/home"},
+    {name: "Tasks", icon: CheckIcon, link: "/tasks"},
+    {name: "Calendar", icon: CalendarIcon, link: "/calendar"},
+    {name: "Insights", icon: StarIcon, link: "/insights"}
     // {name: "Settings", icon: SettingsIcon}
 ]
 
 
-const NavButton = ({name, selected, onClick,Icon}) => {
-
-
+const NavButton = ({name, selected, onClick, Icon, link}) => {
 
     return(
-        <Button 
-        leftIcon={<Icon marginRight="1.5"/>}
-        m="5px 0px" // why is mt="md" not working??
-        borderRadius="lg"
-        colorScheme={selected ? "purple" : "gray"}
-        variant="ghost"
-        isFullWidth
-        justifyContent="flex-start"
-        alignItems="center"
-        onClick={onClick}
-        _focus=""
-        bg={selected && "purple.50"}
+        <Link to={link}>
+            <Button 
+            leftIcon={<Icon marginRight="1.5"/>}
+            m="5px 0px" // why is mt="md" not working??
+            borderRadius="lg"
+            colorScheme={selected ? "purple" : "gray"}
+            variant="ghost"
+            isFullWidth
+            justifyContent="flex-start"
+            alignItems="center"
+            onClick={onClick}
+            _focus=""
+            bg={selected && "purple.50"}
+            >
+                {name}
 
-    >
-        {name}
-
-    </Button>
+            </Button>
+        </Link>
     )
 }
 
@@ -63,10 +66,7 @@ const NavIconButton = ({Icon, selected}) => {
 
 const Nav = () => {
 
-    const [selected,setSelected] = useState("Tasks")
-
-
-
+    const [selected,setSelected] = useState("Home")
 
     return(
       <Flex 
@@ -84,12 +84,13 @@ const Nav = () => {
             direction="column"
             alignItems="center"
         >
-            <Image 
-                alignSelf="flex-start"
-                src={logo}
-                m="10px"
-                w="60px" w="60px"
-            />
+            <LinkBox alignSelf="flex-start" m="10px "w="60px" w="60px">
+                <LinkOverlay href="/">
+                    <Image 
+                        src={logo}
+                    />
+                </LinkOverlay>
+            </LinkBox>
 
             <Box 
             w='100%'
@@ -102,6 +103,7 @@ const Nav = () => {
                         onClick={() => setSelected(key.name)} 
                         name={key.name} 
                         selected={key.name == selected}
+                        link={key.link}
                     />
                 )}
         

@@ -1,32 +1,22 @@
-import './App.css';
-
-import {Box, Text, ChakraProvider, Flex, Button} from "@chakra-ui/react"
-import {CheckIcon} from "@chakra-ui/icons"
-
-import SideNav from './Components/SideNav'
+import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import Home from './views/Home'
+import Tasks from './views/Tasks'
+import Calendar from './views/Calendar'
+import Insights from './views/Insights'
 
 
 function App() {
 
-
-
   return (
-    <ChakraProvider>
-
-      <Flex background="#F7F8FA" height="100vh">
-
-        <SideNav/>
-        <Box flexGrow={1} />
-        
-
-      </Flex>
-
-
-      {/* <Center height="100vh" flexDirection="column" bg="#F7F8FA">
-        <CheckCircleIcon h={50} w={50} color="#303C6C" />
-        <Text fontSize="xl" >Incentiva</Text>
-      </Center> */}
-    </ChakraProvider>
+    <BrowserRouter>
+      <Switch>
+        <Route to="/home" component={Home}/>
+        <Route to="/tasks" component={Tasks}/>
+        <Route to="/calendar" component={Calendar}/>
+        <Route to="/insights" component={Insights}/>
+        <Route to="/" component={Home}/>
+      </Switch>
+    </BrowserRouter>
 
   );
 }
