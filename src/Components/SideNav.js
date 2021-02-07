@@ -20,7 +20,6 @@ const NavKeys = [
 const NavButton = ({name, selected, onClick, Icon, link}) => {
 
     return(
-<<<<<<< HEAD
         <Link to={link}>
             <Button 
             leftIcon={<Icon marginRight="1.5"/>}
@@ -36,24 +35,6 @@ const NavButton = ({name, selected, onClick, Icon, link}) => {
             bg={selected && "purple.50"}
             >
                 {name}
-=======
-        <Button 
-        leftIcon={<Icon marginRight="1.5"/>}
-        m="5px 0px" // why is mt="md" not working??
-        borderRadius="lg"
-        colorScheme={selected ? "purple" : "gray"}
-        variant="ghost"
-        isFullWidth
-        justifyContent="flex-start"
-        alignItems="center"
-        onClick={onClick}
-        _focus=""
-        fontWeight="500"
-        bg={selected && "purple.50"}
-
-    >
-        {name}
->>>>>>> 814606b9c195a05c5a9b4f71747375062166aa97
 
             </Button>
         </Link>
