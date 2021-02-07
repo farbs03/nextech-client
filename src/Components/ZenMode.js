@@ -46,7 +46,7 @@ const ZenMode = () => {
                 setT(0)
                 setActive(true)
             }
-        }, 1500)
+        }, 1000)
     }, [currInd])
 
 
@@ -66,7 +66,7 @@ const ZenMode = () => {
 
 
     return (
-        <div id="zen-body" style={{height:"120vh"}}>
+        <div id="zen-body">
 
             {/* Timer */}
             <div style={{display:"flex", justifyContent:"space-evenly", alignItems:"center", margin:"20px 0 40px 0"}}>
@@ -139,7 +139,7 @@ const ZenMode = () => {
                             }
                         }/>
                         &nbsp; &nbsp; &nbsp;
-                        <CaretRightOutlined style={{color: active? "#3182ce": "gray", fontSize:"17px", width:"14px", margin:"0 2px 0 -2px"}} onClick={() => {
+                        <CaretRightOutlined style={{color: active? "#3182ce": "gray", fontSize:"17px", width:"14px", margin:"0 2px 0 -1px", transform: "scaleX(1.4)"}} onClick={() => {
                             if (active) {
                                 if (currInd != -1) {updateStatus(currInd, -1)}
                                 updateStatus(index, 0)
@@ -159,7 +159,7 @@ const ZenMode = () => {
                             }
                         }}/>
                         &nbsp; &nbsp; &nbsp;
-                        <CaretRightOutlined style={{color: active? "#3182ce": "gray", fontSize:"17px", width:"14px", margin:"0 2px 0 -2px"}} onClick={() => {
+                        <CaretRightOutlined style={{color: active? "#3182ce": "gray", fontSize:"17px", width:"14px", margin:"0 2px 0 -1px", transform: "scaleX(1.4)"}} onClick={() => {
                             if (active) {
                                 if (currInd != -1) {updateStatus(currInd, -1)}
                                 updateStatus(index, 0)
