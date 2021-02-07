@@ -1,23 +1,39 @@
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
+
+import SideNav from './Components/SideNav'
 import Home from './Components/Home'
+import ZenMode from './Components/ZenMode'
 import Tasks from './Components/Tasks'
 import Calendar from './Components/Calendar'
 import Insights from './Components/Insights'
 
+import {Box, Text, ChakraProvider, Flex, Button} from "@chakra-ui/react"
+import './App.css'
 
-function App() {
 
+
+const App = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route to="/home" component={Home}/>
-        <Route to="/tasks" component={Tasks}/>
-        <Route to="/calendar" component={Calendar}/>
-        <Route to="/insights" component={Insights}/>
-        <Route to="/" component={Home}/>
-      </Switch>
-    </BrowserRouter>
+    <ChakraProvider>
+      <Flex background="#F7F8FA" height="100vh">
+        <BrowserRouter>
+          
+          <SideNav/>
+          {/* <Box flexGrow={1} /> */}
 
+          <Switch>
+            <Route exact path="/home" component={Home}/>
+            <Route exact path="/tasks" component={Tasks}/>
+            <Route exact path="/timer" component={ZenMode}/>
+            <Route exact path="/calendar" component={Calendar}/>
+            <Route exact path="/insights" component={Insights}/>
+            <Route exact path="/" component={Home}/>
+          </Switch>
+              
+        </BrowserRouter>
+      </Flex>
+      
+    </ChakraProvider>
   );
 }
 

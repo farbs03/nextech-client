@@ -6,25 +6,8 @@ import SideNav from "./SideNav"
 function Calendar() {
 
 
-
   return (
-    <ChakraProvider>
-
-      <Flex background="#F7F8FA" height="100vh">
-
-        <SideNav/>
-        <Box flexGrow={1} />
-        
-
-      </Flex>
-
-
-      {/* <Center height="100vh" flexDirection="column" bg="#F7F8FA">
-        <CheckCircleIcon h={50} w={50} color="#303C6C" />
-        <Text fontSize="xl" >Incentiva</Text>
-      </Center> */}
-    </ChakraProvider>
-
+    <div>calendar</div>
   );
 }
 

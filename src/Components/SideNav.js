@@ -1,16 +1,17 @@
 import React, {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useLocation} from 'react-router-dom'
 
 import {Box, Flex, Button, Image, IconButton, Avatar, Text} from "@chakra-ui/react"
 import {LinkOverlay, LinkBox} from "@chakra-ui/react"
-import {CheckIcon, CalendarIcon, SettingsIcon, ViewIcon, StarIcon, Icon} from "@chakra-ui/icons"
+import {CheckIcon, CalendarIcon, SettingsIcon, ViewIcon, StarIcon, Icon, TimeIcon} from "@chakra-ui/icons"
 import {BsFillHouseDoorFill} from "react-icons/bs"
 
 import logo from "../logo2.png"
 
 const NavKeys = [
     {name: "Home", icon: BsFillHouseDoorFill, link: "/home"},
-    {name: "Tasks", icon: CheckIcon, link: "/tasks"},
+    {name: "Sick Mode", icon: TimeIcon, link: "/timer"},
+    {name: "Tasks Manager", icon: CheckIcon, link: "/tasks"},
     {name: "Calendar", icon: CalendarIcon, link: "/calendar"},
     {name: "Insights", icon: StarIcon, link: "/insights"}
     // {name: "Settings", icon: SettingsIcon}
@@ -67,7 +68,7 @@ const NavIconButton = ({Icon, selected}) => {
 
 const Nav = () => {
 
-    const [selected,setSelected] = useState("Home")
+    const [selected,setSelected] = useState(useLocation().pathname)
 
     return(
       <Flex 
@@ -98,12 +99,12 @@ const Nav = () => {
             mt="20"
             >
             
-                {selected && NavKeys.map((key) => 
+                {selected && NavKeys.map((key) =>
                     <NavButton 
                         Icon={key.icon}
-                        onClick={() => setSelected(key.name)} 
+                        onClick={() => setSelected(key.link)} 
                         name={key.name} 
-                        selected={key.name == selected}
+                        selected={key.link == selected}
                         link={key.link}
                     />
                 )}

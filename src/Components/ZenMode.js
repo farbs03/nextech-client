@@ -13,11 +13,11 @@ const ZenMode = () => {
     const [user, setUser] = useState(userData)
     const [currInd, setCurrInd] = useState(
         user.days[0].workTasks.findIndex(item => item.status == 0)
-    )
+    ) //index of current task in the day
     
     const [t, setT] = useState(100)
     const [paused, setPaused] = useState(false)
-
+    const [active, setActive] = useState(true) //whether the buttons are active
 
 
     useEffect(() => {
@@ -33,15 +33,18 @@ const ZenMode = () => {
     }, [t, paused])
 
     useEffect(() => {
+        setActive(false)
         setPaused(true)
         setTimeout(() => {
             if (currInd != -1) {
                 setT(user.workTasks.find(item => item.id == user.days[0].workTasks[currInd].id).duration)
                 setTimeout(() => {
                     setPaused(false)
+                    setActive(true)
                 }, 1000)
             } else {
                 setT(0)
+                setActive(true)
             }
         }, 1500)
     }, [currInd])
@@ -70,13 +73,15 @@ const ZenMode = () => {
                 <IconButton
                     icon={<RetweetOutlined style={{fontSize:"20px"}}/>}
                     onClick={() => {
-                        const nextInd = user.days[0].workTasks.findIndex(item => item.status == -1)
-                        if (currInd != -1) {updateStatus(currInd, -1)}
-                        if (nextInd != -1) {updateStatus(nextInd, 0)}
-                        setCurrInd(nextInd)
+                        if (active) {
+                            const nextInd = user.days[0].workTasks.findIndex(item => item.status == -1)
+                            if (currInd != -1) {updateStatus(currInd, -1)}
+                            if (nextInd != -1) {updateStatus(nextInd, 0)}
+                            setCurrInd(nextInd)
+                        }
                     }}
                     colorScheme="blue"
-                    isRound style={{width: "80px", height: "80px"}}
+                    isRound style={active? {width: "80px", height: "80px"} : {width: "80px", height: "80px", backgroundColor: "gray"}}
                 />
                 <CircularProgress value={t} className="home-progress" size="250px">
                     <CircularProgressLabel>
@@ -91,9 +96,13 @@ const ZenMode = () => {
                 </CircularProgress>
                 <IconButton
                     icon={<StepForwardOutlined style={{fontSize:"20px"}}/>}
-                    onClick={() => toNextTask()}
+                    onClick={() => {
+                        if (active) {
+                            toNextTask()
+                        }
+                    }}
                     colorScheme="blue"
-                    isRound style={{width: "80px", height: "80px"}}
+                    isRound style={active? {width: "80px", height: "80px"} : {width: "80px", height: "80px", backgroundColor: "gray"}}
                 />
             </div>
 
@@ -104,14 +113,18 @@ const ZenMode = () => {
                 data: 0,
                 buttonicon: (index) => (
                     <>
-                        <CheckOutlined style={{color: "#52c41a"}} onClick={() => {
-                            updateStatus(index, 1)
-                            setCurrInd(-1)
+                        <CheckOutlined style={{color: active? "#52c41a": "gray"}} onClick={() => {
+                            if (active) {
+                                updateStatus(index, 1)
+                                setCurrInd(-1)
+                            }
                         }}/>
                         &nbsp; &nbsp; &nbsp;
-                        <ArrowDownOutlined onClick={() => {
-                            updateStatus(index, -1)
-                            setCurrInd(-1)
+                        <ArrowDownOutlined style={{color: active? "black": "gray"}} onClick={() => {
+                            if (active) {
+                                updateStatus(index, -1)
+                                setCurrInd(-1)
+                            }
                         }}/>
                     </>
                 )
@@ -120,12 +133,18 @@ const ZenMode = () => {
                 data: -1,
                 buttonicon: (index) => (
                     <>
-                        <CheckOutlined style={{color: "#52c41a"}} onClick={() => updateStatus(index, 1)}/>
+                        <CheckOutlined style={{color: active? "#52c41a": "gray"}} onClick={() => {
+                            if (active) {
+                                updateStatus(index, 1)}
+                            }
+                        }/>
                         &nbsp; &nbsp; &nbsp;
-                        <CaretRightOutlined style={{color:"#1890ff", fontSize:"17px", width:"14px", margin:"0 2px 0 -2px"}} onClick={() => {
-                            if (currInd != -1) {updateStatus(currInd, -1)}
-                            updateStatus(index, 0)
-                            setCurrInd(index)
+                        <CaretRightOutlined style={{color: active? "#3182ce": "gray", fontSize:"17px", width:"14px", margin:"0 2px 0 -2px"}} onClick={() => {
+                            if (active) {
+                                if (currInd != -1) {updateStatus(currInd, -1)}
+                                updateStatus(index, 0)
+                                setCurrInd(index)
+                            }
                         }}/>
                     </>
                 )
@@ -134,12 +153,18 @@ const ZenMode = () => {
                 data: 1,
                 buttonicon: (index) => (
                     <>
-                        <ArrowUpOutlined onClick={() => updateStatus(index, -1)}/>
+                        <ArrowUpOutlined style={{color: active? "black": "gray"}} onClick={() => {
+                            if (active) {
+                                updateStatus(index, -1)
+                            }
+                        }}/>
                         &nbsp; &nbsp; &nbsp;
-                        <CaretRightOutlined style={{color:"#1890ff", fontSize:"17px", width:"14px", margin:"0 2px 0 -2px"}} onClick={() => {
-                            if (currInd != -1) {updateStatus(currInd, -1)}
-                            updateStatus(index, 0)
-                            setCurrInd(index)
+                        <CaretRightOutlined style={{color: active? "#3182ce": "gray", fontSize:"17px", width:"14px", margin:"0 2px 0 -2px"}} onClick={() => {
+                            if (active) {
+                                if (currInd != -1) {updateStatus(currInd, -1)}
+                                updateStatus(index, 0)
+                                setCurrInd(index)
+                            }
                         }}/>
                     </>
                 )
