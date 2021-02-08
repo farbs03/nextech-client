@@ -8,7 +8,7 @@ function Tasks() {
 
 
   return (
-    <div>tasks</div>
+    <div style={{textAlign: "center", margin: "auto"}}>tasks</div>
   );
 }
 

@@ -13,6 +13,11 @@ import './App.css'
 
 
 const App = () => {
+
+
+  //var detector = new MobileDetect(window.navigator.userAgent)
+  //console.log(detector.mobile());
+
   return (
     <ChakraProvider>
       <Flex background="#F7F8FA" height="100vh">

@@ -6,6 +6,7 @@ import {  Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerC
 import {LinkOverlay, LinkBox} from "@chakra-ui/react"
 import {CheckIcon, CalendarIcon, SettingsIcon, ViewIcon, StarIcon, Icon, TimeIcon, ArrowRightIcon} from "@chakra-ui/icons"
 import {BsFillHouseDoorFill} from "react-icons/bs"
+import useMedia from '../hooks/useMedia'
 
 import logo from "../logo2.png"
 
@@ -78,95 +79,178 @@ const Nav = () => {
         setSelected(key.link);
         onClose()
     }
-    
 
-    return(
-        <>
-            <Button onClick={onOpen} mt="0.5%" ml="0.5%">
-                <ArrowRightIcon/>
-            </Button>
+    const mobile = useMedia(['(min-width: 750px)', '(max-width: 750px)'], [false, true])
 
-            <Drawer
-                isOpen = {isOpen}
-                placement = "left"
-                onClose ={onClose}
-            >
-                <DrawerOverlay>
-                    <DrawerContent>
-                        <DrawerHeader>Basic drawer</DrawerHeader>
-                        <DrawerContent>
-                            <Flex
-                                mt="5"
-                                w="100%"
-                                direction="column"
-                                alignItems="center"
-                                
-                            >
-                                <LinkBox m="10px "w="80px" >
-                                    
-                                    <LinkOverlay href="/">
-                                        <Image 
-                                            src={logo}
-                                        />
-                                    </LinkOverlay>
-                                    
-                                </LinkBox>
-                                <Box 
-                                    w='90%'
-                                    mt="16"
-                                >
-                            
-                                    {selected && NavKeys.map((key) =>
-                                        <NavButton 
-                                            Icon={key.icon}
-                                            onClick={() => onSelectedChange(key)} 
-                                            name={key.name} 
-                                            selected={key.link == selected}
-                                            link={key.link}
-                                        />
-                                    )}
-                        
-                                </Box>
-                            </Flex>
+    if(!mobile){
 
-                            <Spacer />
+        return(
 
-                            <Flex
-                                w="90%"
-                                alignItems="center"
-                                justifyContent="space-between"
-                                mb="5"
-                                borderRadius="md"
-                            >   
-                                <Flex
-                                    ml="5%"
-                                >
-                                    <Avatar bg="purple.500" size="xs" mr="2" ml="2"/>
-                                    <Text fontWeight="500">Preston</Text>
-                                </Flex>
+            <Flex 
+                direction="column"
+                alignItems="center"
+                justifyContent="space-between"
+                w={275}
+                background="white" 
+                style={{boxShadow: "2px 0px 12px rgba(0,0,0,0.1)"}}
+            > 
 
+                <Flex
+                    mt="5"
+                    w="90%"
+                    direction="column"
+                    alignItems="center"
+                >
+                    <LinkBox m="10px "w="80px" w="80px">
+                        <LinkOverlay href="/">
+                            <Image 
+                                src={logo}
+                            />
+                        </LinkOverlay>
+                    </LinkBox>
 
-                                <Box>
-                                    <NavIconButton Icon={<SettingsIcon/>}/>
-                                    <NavIconButton Icon={<ViewIcon/>}/>
-                                </Box>
+                    <Box 
+                    w='100%'
+                    mt="16"
+                    >
+                    
+                        {selected && NavKeys.map((key) =>
+                            <NavButton 
+                                Icon={key.icon}
+                                onClick={() => setSelected(key.link)} 
+                                name={key.name} 
+                                selected={key.link == selected}
+                                link={key.link}
+                            />
+                        )}
+                
+                    </Box>
+                </Flex>
             
+                
+                <Flex
+                w="90%"
+                alignItems="center"
+                justifyContent="space-between"
+                mb="5"
+                borderRadius="md"
+                >   
+                    <Flex>
+                        <Avatar bg="purple.500" size="xs" mr="2" ml="2"/>
+                        <Text fontWeight="500">Preston</Text>
+                    </Flex>
 
-                            </Flex>
+
+                    <Box>
+                        <NavIconButton Icon={<SettingsIcon/>}/>
+                        <NavIconButton Icon={<ViewIcon/>}/>
+                    </Box>
+                    
+
+                </Flex>
+                {/* <Image src={Logo} h={20} w={20}/> */}
+
         
 
+            </Flex>
 
+        )
+
+    }else {
+        return(
+            <>
+                <Button style={{autofocus:"true", hidden:"true", position:"absolute"}}></Button>
+
+                <Button style={{position: "absolute"}} onClick={onOpen} mt="2%" ml="2%">
+                    <ArrowRightIcon/>
+                </Button>
+
+
+                <Drawer
+                    isOpen = {isOpen}
+                    placement = "left"
+                    onClose ={onClose}
+                    
+                >
+                    <DrawerOverlay>
+                        <DrawerContent>
+                        
+                            <DrawerHeader>Basic drawer</DrawerHeader>
+                            <DrawerContent>
+                                <Flex
+                                    mt="5"
+                                    w="100%"
+                                    direction="column"
+                                    alignItems="center"
+                                    
+                                >
+                                    
+                                    
+                                    <LinkBox m="10px "w="80px" >
+                                        
+                                        <LinkOverlay href="/">
+                                            <Image 
+                                                src={logo}
+                                            />
+                                        </LinkOverlay>
+                                        
+                                    </LinkBox>
+                                    <Box 
+                                        w='90%'
+                                        mt="16"
+                                    >
+                                
+                                        {selected && NavKeys.map((key) =>
+                                            <NavButton 
+                                                Icon={key.icon}
+                                                onClick={() => onSelectedChange(key)} 
+                                                name={key.name} 
+                                                selected={key.link == selected}
+                                                link={key.link}
+                                            />
+                                        )}
+                            
+                                    </Box>
+                                </Flex>
+
+                                <Spacer />
+
+                                <Flex
+                                    w="90%"
+                                    alignItems="center"
+                                    justifyContent="space-between"
+                                    mb="5"
+                                    borderRadius="md"
+                                >   
+                                    <Flex
+                                        ml="5%"
+                                    >
+                                        <Avatar bg="purple.500" size="xs" mr="2" ml="2"/>
+                                        <Text fontWeight="500">Preston</Text>
+                                    </Flex>
+
+                                    
+                                    <Box>
+                                        <NavIconButton Icon={<SettingsIcon/>}/>
+                                        <NavIconButton Icon={<ViewIcon/>}/>
+                                    </Box>
+                
+
+                                </Flex>
+            
+
+
+                            </DrawerContent>
                         </DrawerContent>
-                    </DrawerContent>
-                </DrawerOverlay>
+                    </DrawerOverlay>
 
 
-            </Drawer>
+                </Drawer>
 
-        </>
+            </>
 
-    )
-
+        )
+    }
 }
 
 export default Nav

@@ -8,7 +8,7 @@ function Home() {
 
 
   return (
-    <div>home</div>
+    <div style={{textAlign: "center", margin: "auto"}}>home</div>
   );
 }
 
