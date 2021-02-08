@@ -8,7 +8,7 @@ function Insights() {
 
 
   return (
-    <div>insights</div>
+    <div style={{textAlign: "center", margin: "auto"}}>insights</div>
   );
 }
 

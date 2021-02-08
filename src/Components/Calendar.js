@@ -7,7 +7,7 @@ function Calendar() {
 
 
   return (
-    <div>calendar</div>
+    <div style={{textAlign: "center", margin: "auto"}}>calendar</div>
   );
 }
 
