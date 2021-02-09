@@ -16,6 +16,7 @@ const ZenMode = () => {
     const [paused, setPaused] = useState(false)
     const [active, setActive] = useState(true) //whether buttons are active
     
+    var time = 1000
 
 
     useEffect(() => {
@@ -30,12 +31,6 @@ const ZenMode = () => {
 
     useEffect(() => {
         if (paused) {
-            var min = Math.floor(parseInt(timeForm.substring(0, timeForm.indexOf(":"))))
-            var sec = Math.floor(parseInt(timeForm.substring(timeForm.indexOf(":")+1)))
-            if (0<=min && 0<=sec && sec<=60) {
-                setT(min*60 + sec)
-            }
-        } else {
             setTimeForm(timeString(t))
         }
     }, [paused])
@@ -55,21 +50,24 @@ const ZenMode = () => {
     const [timeForm, setTimeForm] = useState(timeString(t))
 
 
-
+    const changeTime = (inc) => {
+        setActive(false)
+        setPaused(true)
+        setTimeout(() => {
+            setT(inc)
+            setTimeout(() => {
+                setActive(true)
+                setPaused(false)
+            }, 500)
+        }, 1000)
+    }
     const addMin = (inc) => {
+        setTimeForm(timeString(t+inc*60))
         if (t+inc*60>5) {
             if (paused) {
                 setT(t+inc*60)
             } else {
-                setActive(false)
-                setPaused(true)
-                setTimeout(() => {
-                    setT(t+inc*60)
-                    setTimeout(() => {
-                        setActive(true)
-                        setPaused(false)
-                    }, 1000)
-                }, 1000)
+                changeTime(t+inc*60)
             }
         }
     }
@@ -81,12 +79,23 @@ const ZenMode = () => {
             isRound style={active? {width: size, height: size} : {width: size, height: size, backgroundColor: "gray"}}
         />
     )
-       
+      
+    
+
+    const setTimeToForm = () => {
+        var min = Math.floor(parseInt(timeForm.substring(0, timeForm.indexOf(":"))))
+        var sec = Math.floor(parseInt(timeForm.substring(timeForm.indexOf(":")+1)))
+        if (0<=min && 0<=sec && sec<=60) {
+            setT(min*60 + sec)
+        }
+        setTimeout(() => {setPaused(false)}, 1000)
+    }
+
 
 
     return (
         <div id="zen-body">
-            
+
             {/* Timer */}
             <div style={{display:"flex", justifyContent:"center", alignItems:"center", margin:"20px 0 40px 0"}}>
                 <CircularProgress value={t/36} className="home-progress" size="400px" thickness="5px" color="purple.500">
@@ -98,8 +107,8 @@ const ZenMode = () => {
                                 style={{width:"142px", fontSize:"60px", height:"60px"}}
                                 onChange = {(e) => setTimeForm(e.target.value)}
                                 onKeyPress = {e => {
-                                    if (e.key == 'Enter') {
-                                        setPaused(false)
+                                    if (e.key == 'Enter' && paused) {
+                                        setTimeToForm()
                                     }
                                 }}
                             />
@@ -128,7 +137,12 @@ const ZenMode = () => {
                     }
                     colorScheme="blue"
                     isRound style={active? {width: "80px", height: "80px"} : {width: "80px", height: "80px", backgroundColor: "gray"}}
-                    onClick={() => setPaused(!paused)}
+                    onClick={() => {
+                        if (paused) {
+                            setTimeToForm()
+                        }
+                        setPaused(!paused)
+                    }}
                 />
                 {skipButton(5, "70px")}
                 {skipButton(+15, "60px")}
