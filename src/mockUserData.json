@@ -27,6 +27,12 @@
             "name": "Emails",
             "duration": 30,
             "description": "Due at 11:59pm"
+        }, 
+        {
+            "id": "3",
+            "name": "IDK",
+            "duration": 45,
+            "description": "Due at 11:59pm"
         }
     ],
     "days": [

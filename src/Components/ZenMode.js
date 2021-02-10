@@ -9,21 +9,15 @@ import {StepForwardOutlined,StepBackwardOutlined, RetweetOutlined, CheckOutlined
 
 const ZenMode = () => {
 
-    const [user, setUser] = useState(userData)
-
-    const currDate = new Date()
     const [t, setT] = useState(3600)
     const [paused, setPaused] = useState(false)
     const [active, setActive] = useState(true) //whether buttons are active
-    
-    var time = 1000
-
 
     useEffect(() => {
         if (!paused) {
             if (t!=0) {
                 setTimeout(() => {
-                    setT(t-1)
+                    setT(t => t-1)
                 }, 1000)
             }
         }

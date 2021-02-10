@@ -20,7 +20,7 @@ const App = () => {
 
   return (
     <ChakraProvider>
-      <Flex background="#F7F8FA" height="100vh">
+      <Flex background="#F7F8FA" height="100vh" className="App">
         <BrowserRouter>
           
           <SideNav/>
