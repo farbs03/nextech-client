@@ -13,6 +13,16 @@ const ZenMode = () => {
     const [paused, setPaused] = useState(false)
     const [active, setActive] = useState(true) //whether buttons are active
 
+
+    useEffect(() => {
+        const screen = document.documentElement;
+        screen.requestFullscreen().catch(() => {})
+        return () => {
+            
+            document.exitFullscreen().catch(() => {})
+        }
+    }, [])
+
     useEffect(() => {
         if (!paused) {
             if (t!=0) {

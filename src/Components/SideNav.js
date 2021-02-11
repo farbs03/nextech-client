@@ -70,9 +70,9 @@ const NavIconButton = ({Icon, selected}) => {
 
 const Nav = () => {
 
-    
-
-    const [selected,setSelected] = useState(useLocation().pathname)
+    const path = useLocation().pathname
+    const defaultPath = path === "/" ? "/home" : path
+    const [selected,setSelected] = useState(defaultPath)
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     const onSelectedChange = (key) => {
@@ -80,9 +80,10 @@ const Nav = () => {
         onClose()
     }
 
+    const studyMode = path == '/study' ? true : false
     const mobile = useMedia(['(min-width: 750px)', '(max-width: 750px)'], [false, true])
 
-    if(!mobile){
+    if(!mobile && !studyMode){
 
         return(
 
@@ -156,10 +157,10 @@ const Nav = () => {
 
         )
 
-    }else {
+    }else if (studyMode || mobile){
         return(
             <>
-                <Button style={{autofocus:"true", hidden:"true", position:"absolute"}}></Button>
+                
 
                 <Button style={{position: "absolute"}} onClick={onOpen} mt="2%" ml="2%">
                     <ArrowRightIcon/>
