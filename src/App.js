@@ -1,4 +1,5 @@
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import { useEffect } from 'react'
 
 import SideNav from './Components/SideNav'
 import Home from './Components/Home'
@@ -10,13 +11,15 @@ import Insights from './Components/Insights'
 import {Box, Text, ChakraProvider, Flex, Button} from "@chakra-ui/react"
 import './App.css'
 
-
+import userData from './mockUserData.json';
+import userDataJs from './Components/MockData.js';
 
 const App = () => {
+  if(!localStorage.getItem('userData')){
+    localStorage.setItem('userData', JSON.stringify(userDataJs))
+  }
 
 
-  //var detector = new MobileDetect(window.navigator.userAgent)
-  //console.log(detector.mobile());
 
   return (
     <ChakraProvider>
@@ -24,15 +27,14 @@ const App = () => {
         <BrowserRouter>
           
           <SideNav/>
-          {/* <Box flexGrow={1} /> */}
+          
 
           <Switch>
-            <Route exact path="/home" component={Home}/>
             <Route exact path="/tasks" component={Tasks}/>
             <Route exact path="/study" component={ZenMode}/>
             <Route exact path="/calendar" component={Calendar}/>
             <Route exact path="/insights" component={Insights}/>
-            <Route exact path="/" component={Home}/>
+            <Route exact path="/" component={Tasks}/>
           </Switch>
               
         </BrowserRouter>

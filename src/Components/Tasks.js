@@ -2,17 +2,35 @@ import React, {useState, useEffect, useContext} from 'react'
 
 import userData from '../mockUserData.json';
 
-import { IconButton, Container, Input, Heading, Button } from "@chakra-ui/react"
+import {
+    Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter,  ModalBody, ModalCloseButton, NumberInput,} from "@chakra-ui/react"
+
+import { IconButton, Container, Input, Heading, Button, useDisclosure, FormControl, FormLabel, Textarea, NumberInputField, NumberIncrementStepper, NumberDecrementStepper , NumberInputStepper} from "@chakra-ui/react"
 import {ArrowRightOutlined, ArrowLeftOutlined, DeleteOutlined, CaretRightOutlined} from '@ant-design/icons'
+
+
 const titleStyle = {marginLeft:"10px", marginTop:"30px", fontSize:"24px"}
 const buttonStyle = (c) => {return {border:"1px solid " + c, color: c, borderRadius:"19px", padding:"10px", width:"38px", height:"38px", justifyContent:"center", display:"flex", alignItems:"center", cursor:"pointer"}}
 
 
-
 const Tasks = () => {
+    
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const currDate = new Date()
-    const [user, setUser] = useState(userData)
+    
+    const [newTask, setNewTask] = useState({})
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('userData')))
+    
+
+    useEffect(() => {
+        localStorage.setItem('userData', JSON.stringify(user))
+        
+        return () => {
+            localStorage.setItem('userData', JSON.stringify(user))
+        }
+    }, [user])
+
     const updateStatus = (index, stat) => {
         const newArr = user.days
         newArr[0].workTasks[index].status = stat
@@ -39,10 +57,11 @@ const Tasks = () => {
     }]
 
     
+
     return (
         <div id="zen-body">
 
-            <Heading size="xl" style={{marginBottom:"30px", color: "#805AD5", opacity:".8"}}>Task Boys</Heading>
+            <Heading size="xl" style={{marginBottom:"30px", color: "#805AD5", opacity:".8"}}>{`Welcome ${user.name}!`}</Heading>
 
             {/* Change Status */}
             <div style={{display:"flex", justifyContent:"space-between", width:"100%"}}>
@@ -57,7 +76,7 @@ const Tasks = () => {
                                         <div style={{display:"flex", alignItems:"center"}}>
                                             <div>
                                                 <div style={{fontWeight:"700"}}>{taskData.name}&nbsp; - &nbsp;{taskData.duration} min.</div>
-                                                <div>{taskData.description? taskData.description : ""}</div>
+                                                <div>{taskData.due? taskData.due : ""}</div>
                                             </div>
                                         </div>
                                         <div style={{display:"flex", alignItems:"center", width:"75px", justifyContent:"space-between"}}>
@@ -90,19 +109,77 @@ const Tasks = () => {
                             index%2 == evenOdd &&
                                 <>
                                     {task.name == "Add Task"?
+                                        <>
                                         <Button colorScheme="purple" variant="ghost"
                                             style={{border:"1px solid rgb(128, 90, 213, .8)", color:"rgb(128, 90, 213, .8)", height:"80px", width:"200px", borderRadius:"20px", margin: index<2? "10px 0" : ""}}
-                                            onClick={() => {
-                                                setUser({...user, workTasks: [...user.workTasks, {
-                                                    "id": user.workTasks.length,
-                                                    "name": "Name",
-                                                    "duration": 30,
-                                                    "description": "Due at 11:59pm"
-                                                }]})
-                                            }}
+                                            onClick={() => {onOpen()}}
                                         >
                                             Add Task
                                         </Button>
+
+                                        <Modal
+                                            isOpen={isOpen} 
+                                            onClose={onClose}
+                                            size = {"xl"}
+                                            >
+                                            <ModalOverlay />
+                                            <ModalContent>
+                                                <ModalHeader>New Task</ModalHeader>
+                                                <ModalCloseButton />
+                                                <ModalBody>
+                                                    
+                                                    
+                                                    <FormControl>
+                                                        <FormLabel>Task name</FormLabel>
+                                                        <Input onChange={(e) => {{
+                                                            setNewTask({...newTask, name: e.target.value})
+                                                        }}} isRequired={true} placeholder="Task Name" value={newTask.name}/>
+
+                                                        <FormLabel mt={4}>Duration (Minutes)</FormLabel>
+                                                        <NumberInput>
+                                                            <NumberInputField onChange={(e) => {{
+                                                                setNewTask({...newTask, duration: e.target.value})
+                                                            }}} placeholder="Duration" value={parseInt(newTask.duration)}/>
+                                                        </NumberInput>
+ 
+                                                        <FormLabel mt={4}>Task Description</FormLabel>
+                                                        <Textarea onChange={(e) => {{
+                                                            setNewTask({...newTask, description: e.target.value})
+                                                        }}} placeholder="Task Description" value ={newTask.description}/>
+ 
+                                                        <FormLabel  mt={4} >Due Date</FormLabel>
+
+                                                        <Input onChange={(e) => {{
+                                                            setNewTask({...newTask, due: e.target.value})
+                                                        }}} type="date" value={newTask.due}/>
+                                                    </FormControl>
+
+                                                </ModalBody>
+
+                                                <ModalFooter>
+                                                    <Button colorScheme="blue" mr={3} onClick={() => {
+                                                        onClose();
+                                                        setUser({...user, workTasks: [...user.workTasks, {
+                                                            "id": user.workTasks.length,
+                                                            "name": !newTask.name ? "Untitled" : newTask.name,
+                                                            "description": !newTask.description ? "" : newTask.description,
+                                                            "duration": !newTask.duration ? 0 : newTask.duration,
+                                                            "due": newTask.due
+                                                        }]})
+                                                        console.log(newTask)
+                                                        setNewTask({})
+                                                    }}>
+                                                    Add
+                                                    </Button>
+                                                    <Button onClick={() => {{
+                                                        onClose();
+
+                                                        setNewTask({})
+                                                    }}} variant="ghost">Cancel</Button>
+                                                </ModalFooter>
+                                            </ModalContent>
+                                        </Modal>
+                                        </>
                                     :
                                         <Container hoverable style={{borderRadius:"20px", maxWidth:"none", margin:"10px 0", padding: "15px 20px", border: "1px solid lightgray", display:"flex", alignItems:"center", justifyContent:"space-between"}}>
                                             
@@ -135,7 +212,9 @@ const Tasks = () => {
                                                         />
                                                         min.
                                                     </div>
-                                                    <div>{task.description? task.description : ""}</div>
+                                                    <div>{task.due? task.due : ""}</div>
+                                                    {!task.description ? "" : <div><hr width="100%" marginTop="5px"></hr>{task.description}</div> }
+                                                    
                                                 </div>
                                             </div>
                                             <DeleteOutlined 

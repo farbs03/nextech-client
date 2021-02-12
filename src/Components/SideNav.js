@@ -11,9 +11,9 @@ import useMedia from '../hooks/useMedia'
 import logo from "../logo2.png"
 
 const NavKeys = [
-    {name: "Home", icon: BsFillHouseDoorFill, link: "/home"},
-    {name: "Study Mode", icon: TimeIcon, link: "/study"},
     {name: "Tasks Manager", icon: CheckIcon, link: "/tasks"},
+    
+    {name: "Study Mode", icon: TimeIcon, link: "/study"},
     {name: "Calendar", icon: CalendarIcon, link: "/calendar"},
     {name: "Insights", icon: StarIcon, link: "/insights"}
     // {name: "Settings", icon: SettingsIcon}
@@ -71,7 +71,7 @@ const NavIconButton = ({Icon, selected}) => {
 const Nav = () => {
 
     const path = useLocation().pathname
-    const defaultPath = path === "/" ? "/home" : path
+    const defaultPath = path === "/" ? "/tasks" : path
     const [selected,setSelected] = useState(defaultPath)
     const { isOpen, onOpen, onClose } = useDisclosure()
 
