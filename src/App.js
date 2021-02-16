@@ -11,12 +11,11 @@ import Insights from './Components/Insights'
 import {Box, Text, ChakraProvider, Flex, Button} from "@chakra-ui/react"
 import './App.css'
 
-import userData from './mockUserData.json';
-import userDataJs from './Components/MockData.js';
+import {userData} from './Components/MockData.js';
 
 const App = () => {
   if(!localStorage.getItem('userData')){
-    localStorage.setItem('userData', JSON.stringify(userDataJs))
+    localStorage.setItem('userData', JSON.stringify(userData))
   }
 
 

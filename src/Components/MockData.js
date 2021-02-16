@@ -1,4 +1,4 @@
-const data = {
+export const userData = {
     "name": "McRib",
     "friends": ["id1", "id2"],
     "stats": {
@@ -8,48 +8,61 @@ const data = {
         "activeDays": 10
     },
     "lifeTasks": [
-
+        {
+            "name": "School",
+            "time": ["8:00am", "2:00pm"],
+            "due": "School do be school",
+            "description": "this is a description"
+        }
     ],
     "workTasks": [
         {
-            "id": "1",
             "name": "Math HW",
             "duration": 60,
-            "due": "Due at 11:59pm"
+            "due": "2021-02-09",
+            "description": "this is a description"
         },
         {
-            "id": "2",
             "name": "Emails",
             "duration": 30,
-            "due": "Due at 11:59pm"
+            "due": "2021-02-09",
+            "description": "this is a description"
         }, 
         {
-            "id": "3",
             "name": "IDK",
             "duration": 45,
-            "due": "Due at 11:59pm"
+            "due": "2021-02-09",
+            "description": "this is a description"
         }
     ],
     "days": [
         {
+            "date": "2021-02-15",
             "lifeTasks": [
-                {"id": 1, "status": 0}
+                {
+                    "name": "School",
+                    "time": ["8:00am", "2:00pm"],
+                    "due": "2021-02-09",
+                    "description": "this is a description",
+                    "status": 1
+                }
             ],
             "workTasks": [
-                {"id": 1, "status": 1},
-                {"id": 2, "status": 1}
-            ]
-        },
-        {
-            "lifeTasks": [
-                {"id": 1, "status": 0}
-            ],
-            "workTasks": [
-                {"id": 1, "status": 1},
-                {"id": 2, "status": 1}
+                {
+                    "name": "IDK",
+                    "duration": 45,
+                    "due": "2021-02-09",
+                    "description": "this is a description",
+                    "status": -1
+                },
+                {
+                    "name": "IDK",
+                    "duration": 45,
+                    "due": "2021-02-09",
+                    "description": "this is a description",
+                    "status": 1
+                }
             ]
         }
     ]
 }
-
-export default data

@@ -12,7 +12,6 @@ import logo from "../logo2.png"
 
 const NavKeys = [
     {name: "Tasks Manager", icon: CheckIcon, link: "/tasks"},
-    
     {name: "Study Mode", icon: TimeIcon, link: "/study"},
     {name: "Calendar", icon: CalendarIcon, link: "/calendar"},
     {name: "Insights", icon: StarIcon, link: "/insights"}
@@ -21,7 +20,6 @@ const NavKeys = [
 
 
 const NavButton = ({name, selected, onClick, Icon, link}) => {
-
     return(
         <Link to={link}>
             <Button 
@@ -38,7 +36,6 @@ const NavButton = ({name, selected, onClick, Icon, link}) => {
             bg={selected && "purple.50"}
             >
                 {name}
-
             </Button>
         </Link>
     )
@@ -47,24 +44,19 @@ const NavButton = ({name, selected, onClick, Icon, link}) => {
 const NavIconButton = ({Icon, selected}) => {
     return(
         <IconButton 
-        icon={Icon}
-       
-        ml="2px" // why is mt="md" not working??
-        borderRadius="lg"
-        colorScheme="gray"
-        variant="ghost"
-        _focus=""
-        bg={selected && "purple.50"}
-        _hover={{
-            bg: "purple.50",
-            color: "purple.500"
-        }}
+            icon={Icon}
         
-
-    >
-
-
-    </IconButton>
+            ml="2px" // why is mt="md" not working??
+            borderRadius="lg"
+            colorScheme="gray"
+            variant="ghost"
+            _focus=""
+            bg={selected && "purple.50"}
+            _hover={{
+                bg: "purple.50",
+                color: "purple.500"
+            }}
+        ></IconButton>
     )
 }
 

@@ -7,8 +7,6 @@ import logo from "../logo2.png"
 
 
 function Home() {
-
-
   return (
     <Flex 
         direction="column"

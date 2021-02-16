@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 
-import userData from '../mockUserData.json';
+import {userData} from './MockData';
 
 import { CircularProgress, CircularProgressLabel, IconButton, Container, Input } from "@chakra-ui/react"
 import {StepForwardOutlined,StepBackwardOutlined, RetweetOutlined, CheckOutlined, PauseOutlined, CaretRightOutlined, ArrowUpOutlined, ArrowDownOutlined} from '@ant-design/icons'
@@ -18,7 +18,6 @@ const ZenMode = () => {
         const screen = document.documentElement;
         screen.requestFullscreen().catch(() => {})
         return () => {
-            
             document.exitFullscreen().catch(() => {})
         }
     }, [])

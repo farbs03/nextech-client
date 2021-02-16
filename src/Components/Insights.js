@@ -5,8 +5,6 @@ import SideNav from "./SideNav"
 
 
 function Insights() {
-
-
   return (
     <div style={{textAlign: "center", margin: "auto"}}>insights</div>
   );
