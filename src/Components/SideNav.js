@@ -94,7 +94,7 @@ const Nav = () => {
                     direction="column"
                     alignItems="center"
                 >
-                    <LinkBox m="10px "w="80px" w="80px">
+                    <LinkBox m="10px" w="100px">
                         <LinkOverlay href="/">
                             <Image 
                                 src={logo}
@@ -136,7 +136,7 @@ const Nav = () => {
 
                     <Box>
                         <NavIconButton Icon={<SettingsIcon/>}/>
-                        <NavIconButton Icon={<ViewIcon/>}/>
+                        
                     </Box>
                     
 
@@ -179,7 +179,7 @@ const Nav = () => {
                                 >
                                     
                                     
-                                    <LinkBox m="10px "w="80px" >
+                                    <LinkBox m="10px "w="100px" >
                                         
                                         <LinkOverlay href="/">
                                             <Image 
@@ -225,7 +225,7 @@ const Nav = () => {
                                     
                                     <Box>
                                         <NavIconButton Icon={<SettingsIcon/>}/>
-                                        <NavIconButton Icon={<ViewIcon/>}/>
+                                        
                                     </Box>
                 
 
