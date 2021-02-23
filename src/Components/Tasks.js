@@ -2,13 +2,12 @@ import React, {useState, useEffect, useContext} from 'react'
 
 import {userData} from './MockData';
 
-import {Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, NumberInput, useTimeout,} from "@chakra-ui/react"
+import {Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, NumberInput} from "@chakra-ui/react"
 
 import {IconButton, Container, Input, Heading, Button, useDisclosure, FormControl, FormLabel, Textarea, NumberInputField} from "@chakra-ui/react"
 import {ArrowRightOutlined, ArrowLeftOutlined, DeleteOutlined, CaretRightOutlined, RightOutlined, LeftOutlined, DoubleLeftOutlined, DoubleRightOutlined} from '@ant-design/icons'
 
 const titleStyle = {marginLeft:"10px", marginTop:"30px", fontSize:"24px"}
-const buttonStyle = (c) => {return {border:"1px solid " + c, color: c, borderRadius:"19px", padding:"10px", width:"38px", height:"38px", justifyContent:"center", display:"flex", alignItems:"center", cursor:"pointer"}}
 const containerStyle = {borderRadius:"20px", maxWidth:"none", margin:"10px 0", padding: "15px 20px", border: "1px solid #E2E8F0", display:"flex", alignItems:"center", justifyContent:"space-between"}
 
 
@@ -223,11 +222,16 @@ const Tasks = () => {
                     const newDate = new Date(dateString)
                     newDate.setDate(newDate.getDate() + 1)
                     const nextDayStr = newDate.toISOString().split("T")[0]
-                    const newDayIndex = newArr.findIndex(x => x.date == nextDayStr)
+                    var newDayIndex = newArr.findIndex(x => x.date == nextDayStr)
 
+                    if (!newDayIndex || newDayIndex == -1) {
+                        newArr.push({date: nextDayStr, lifeTasks: [], workTasks: [[]]})
+                        newDayIndex = newArr.findIndex(x => x.date == nextDayStr)
+                    }
                     newArr[newDayIndex].workTasks = [...newArr[newDayIndex].workTasks, ...onDeckTasks]
+
                     setUser({...user, days: newArr})
-                    
+
                     setTimeout(() => updateDateString(1), 500)
                 }}
             >Push to Tomorrow</Button>
