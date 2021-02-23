@@ -23,7 +23,7 @@ const App = () => {
 
   return (
     <ChakraProvider>
-      <Flex background="#F7F8FA" height="100vh" className="App" style={{filter: isDark? "invert(100%)" : "invert(0%)"}}>
+      <Flex background="#F7F8FA" height="100vh" className="App" style={{filter: isDark? "invert(100%) hue-rotate(100deg)" : "invert(0%)"}}>
         <BrowserRouter>
           
           <SideNav toggleDark={() => setDark(!isDark)}/>
