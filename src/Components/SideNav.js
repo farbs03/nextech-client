@@ -1,11 +1,10 @@
 import React, {useState} from 'react'
 import {Link, useLocation} from 'react-router-dom'
 
-import {Box, Flex, Button, Image, IconButton, Avatar, Text, Spacer, Center} from "@chakra-ui/react"
+import {Box, Flex, Button, Image, IconButton, Avatar, Text, Spacer, Center, useTimeout} from "@chakra-ui/react"
 import {  Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure } from "@chakra-ui/react"
 import {LinkOverlay, LinkBox} from "@chakra-ui/react"
 import {CheckIcon, CalendarIcon, SettingsIcon, ViewIcon, StarIcon, Icon, TimeIcon, ArrowRightIcon} from "@chakra-ui/icons"
-import {BsFillHouseDoorFill} from "react-icons/bs"
 import useMedia from '../hooks/useMedia'
 
 import logo from "../logo2.png"
@@ -60,8 +59,7 @@ const NavIconButton = ({Icon, selected}) => {
     )
 }
 
-const Nav = () => {
-
+const Nav = ({toggleDark}) => {
     const path = useLocation().pathname
     const defaultPath = path === "/" ? "/tasks" : path
     const [selected,setSelected] = useState(defaultPath)
@@ -136,7 +134,9 @@ const Nav = () => {
 
                     <Box>
                         <NavIconButton Icon={<SettingsIcon/>}/>
-                        
+                        <span onClick={() => toggleDark()}>
+                            <NavIconButton Icon={<ViewIcon/>}/>
+                        </span>
                     </Box>
                     
 
@@ -225,7 +225,9 @@ const Nav = () => {
                                     
                                     <Box>
                                         <NavIconButton Icon={<SettingsIcon/>}/>
-                                        
+                                        <span onClick={() => toggleDark()}>
+                                            <NavIconButton Icon={<ViewIcon/>}/>
+                                        </span>
                                     </Box>
                 
 

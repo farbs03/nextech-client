@@ -1,5 +1,5 @@
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
-import { useEffect } from 'react'
+import { useState } from 'react'
 
 import SideNav from './Components/SideNav'
 import Home from './Components/Home'
@@ -13,21 +13,21 @@ import './App.css'
 
 import {userData} from './Components/MockData.js';
 
+
 const App = () => {
   if(!localStorage.getItem('userData')){
     localStorage.setItem('userData', JSON.stringify(userData))
   }
-
-
+  const [isDark, setDark] = useState(false)
+  
 
   return (
     <ChakraProvider>
-      <Flex background="#F7F8FA" height="100vh" className="App">
+      <Flex background="#F7F8FA" height="100vh" className="App" style={{filter: isDark? "invert(100%)" : "invert(0%)"}}>
         <BrowserRouter>
           
-          <SideNav/>
+          <SideNav toggleDark={() => setDark(!isDark)}/>
           
-
           <Switch>
             <Route exact path="/tasks" component={Tasks}/>
             <Route exact path="/study" component={ZenMode}/>
@@ -35,10 +35,9 @@ const App = () => {
             <Route exact path="/insights" component={Insights}/>
             <Route exact path="/" component={Tasks}/>
           </Switch>
-              
+          
         </BrowserRouter>
       </Flex>
-      
     </ChakraProvider>
   );
 }
