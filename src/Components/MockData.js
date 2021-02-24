@@ -20,19 +20,22 @@ export const userData = {
             "name": "Math HW",
             "duration": 60,
             "due": "2021-02-09",
-            "description": "this is a description"
+            "description": "this is a description",
+            "tag": "School"
         },
         {
             "name": "Emails",
             "duration": 30,
             "due": "2021-02-09",
-            "description": "this is a description"
+            "description": "this is a description",
+            "tag": "Life"
         }, 
         {
             "name": "IDK",
             "duration": 45,
             "due": "2021-02-09",
-            "description": "this is a description"
+            "description": "this is a description",
+            "tag": "Work"
         }
     ],
     "days": [
