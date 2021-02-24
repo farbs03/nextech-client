@@ -136,7 +136,7 @@ const Tasks = () => {
                             "name": !newTask.name ? "Untitled" : newTask.name,
                             "description": !newTask.description ? "" : newTask.description,
                             "duration": !newTask.duration ? 0 : newTask.duration,
-                            "tag": !newTask.tag ? "None" : newTask.tag,
+                            "tag": !newTask.tag ? "" : newTask.tag,
                             "due": newTask.due
                         }]})
                         
