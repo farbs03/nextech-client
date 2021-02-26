@@ -67,5 +67,20 @@ export const userData = {
                 }
             ]
         }
+    ],
+    "selectedNote": 0,
+    "notes": [
+        {
+            "name": "Untitled",
+            "content": "Write your notes here!"
+        },
+        {
+            "name": "Banana Smoothie Recipe",
+            "content": "You Will Need:\n\n   1 banana\n    1/2 orange, peeled and quartered\n    1/3 cup Greek yogurt\n    1/4 cup water or milk (dairy or non-dairy)\n    1 to 2 teaspoons honey, optional\n\n----\nDirections:\n\n    Roughly chop banana and orange quarters then add to a blender. Top with yogurt and the water (or milk). Turn blender on and blend until creamy and smooth. Taste then adjust with honey if needed.\n"
+        },
+        {
+            "name": "Workout Routine",
+            "content": "Chest – Barbell Bench Press – 4 sets of 8 reps\n\nBack – Lat-pulldowns – 4 sets of 10 reps\n\nShoulders – Seated Dumbbell Press – 4 sets of 10 reps\n\nLegs – Leg Extensions – 4 sets of 10 reps\n\nBiceps – Barbell Bbicep Curls – 3 sets of 10 reps\n\nTriceps – Triceps Rope Pushdowns – 3 sets of 15 reps\n"
+        }
     ]
 }

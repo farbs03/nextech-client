@@ -6,6 +6,7 @@ import Home from './Components/Home'
 import ZenMode from './Components/ZenMode'
 import Tasks from './Components/Tasks'
 import Calendar from './Components/Calendar'
+import Notes from './Components/Notes'
 import Insights from './Components/Insights'
 
 import {Box, Text, ChakraProvider, Flex, Button} from "@chakra-ui/react"
@@ -31,7 +32,7 @@ const App = () => {
           <Switch>
             <Route exact path="/tasks" component={Tasks}/>
             <Route exact path="/study" component={ZenMode}/>
-            <Route exact path="/calendar" component={Calendar}/>
+            <Route exact path="/notes" component={Notes}/>
             <Route exact path="/insights" component={Insights}/>
             <Route exact path="/" component={Tasks}/>
           </Switch>
