@@ -3,7 +3,8 @@ import React, {useState, useEffect, useContext} from 'react'
 import {userData} from './MockData';
 
 import {Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, NumberInput} from "@chakra-ui/react"
-
+import {Menu, MenuButton, MenuList, MenuItem} from "@chakra-ui/react"
+import {ChevronDownIcon} from "@chakra-ui/icons"
 import {IconButton, Container, Input, Heading, Button, useDisclosure, FormControl, FormLabel, Textarea, NumberInputField} from "@chakra-ui/react"
 import {ArrowRightOutlined, ArrowLeftOutlined, DeleteOutlined, CaretRightOutlined, RightOutlined, LeftOutlined, DoubleLeftOutlined, DoubleRightOutlined} from '@ant-design/icons'
 
@@ -111,7 +112,20 @@ const Tasks = () => {
                         <Input onChange={(e) => {{
                             setNewTask({...newTask, due: e.target.value})
                         }}} type="date" value={newTask.due}/>
+                        <FormLabel  mt={4} >Tag</FormLabel>
+                        <Menu>
+                            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                                {newTask.tag ? newTask.tag : "Choose a Tag"}
+                            </MenuButton>
+                            <MenuList>
+                                <MenuItem onClick={() => {setNewTask({...newTask, tag: "Work"})}}>Work</MenuItem>
+                                <MenuItem onClick={() => {setNewTask({...newTask, tag: "School"})}}>School</MenuItem>
+                                <MenuItem onClick={() => {setNewTask({...newTask, tag: "Life"})}}>Life</MenuItem>
+                                <MenuItem onClick={() => {setNewTask({...newTask, tag: "Exercise"})}}>Exercise</MenuItem>
+                            </MenuList>
+                        </Menu>
                     </FormControl>
+
                 </ModalBody>
 
                 <ModalFooter>
@@ -122,9 +136,10 @@ const Tasks = () => {
                             "name": !newTask.name ? "Untitled" : newTask.name,
                             "description": !newTask.description ? "" : newTask.description,
                             "duration": !newTask.duration ? 0 : newTask.duration,
+                            "tag": !newTask.tag ? "" : newTask.tag,
                             "due": newTask.due
                         }]})
-                        console.log(newTask)
+                        
                         setNewTask({})
                     }}>
                         Add
@@ -277,6 +292,9 @@ const Tasks = () => {
                                                     <Input variant="unstyled" value={task.due} style={{fontWeight:"700"}}
                                                         onChange={e => updateInventoryTask(e.target.value, "due", index)}
                                                     />
+                                                </div>
+                                                <div style={{display:"flex", fontWeight:"700"}}>
+                                                    {task.tag ? `Tag: ${task.tag}` : ""}
                                                 </div>
                                             </div>
                                             <div style={{display:"flex", alignItems:"center", width:"79px", justifyContent:"space-between"}}>

@@ -4,7 +4,8 @@ import {Link, useLocation} from 'react-router-dom'
 import {Box, Flex, Button, Image, IconButton, Avatar, Text, Spacer, Center, useTimeout} from "@chakra-ui/react"
 import {  Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure } from "@chakra-ui/react"
 import {LinkOverlay, LinkBox} from "@chakra-ui/react"
-import {CheckIcon, CalendarIcon, SettingsIcon, ViewIcon, StarIcon, Icon, TimeIcon, ArrowRightIcon} from "@chakra-ui/icons"
+import {CheckIcon, CalendarIcon, SettingsIcon, ViewIcon, StarIcon, Icon, TimeIcon, ArrowRightIcon, MoonIcon} from "@chakra-ui/icons"
+import {PaperClipOutlined} from "@ant-design/icons"
 import useMedia from '../hooks/useMedia'
 
 import logo from "../logo2.png"
@@ -12,7 +13,7 @@ import logo from "../logo2.png"
 const NavKeys = [
     {name: "Tasks Manager", icon: CheckIcon, link: "/tasks"},
     {name: "Study Mode", icon: TimeIcon, link: "/study"},
-    {name: "Calendar", icon: CalendarIcon, link: "/calendar"},
+    {name: "Notes", icon: PaperClipOutlined, link: "/notes"},
     {name: "Insights", icon: StarIcon, link: "/insights"}
     // {name: "Settings", icon: SettingsIcon}
 ]
@@ -135,7 +136,7 @@ const Nav = ({toggleDark}) => {
                     <Box>
                         <NavIconButton Icon={<SettingsIcon/>}/>
                         <span onClick={() => toggleDark()}>
-                            <NavIconButton Icon={<ViewIcon/>}/>
+                            <NavIconButton Icon={<MoonIcon/>}/>
                         </span>
                     </Box>
                     
@@ -226,7 +227,7 @@ const Nav = ({toggleDark}) => {
                                     <Box>
                                         <NavIconButton Icon={<SettingsIcon/>}/>
                                         <span onClick={() => toggleDark()}>
-                                            <NavIconButton Icon={<ViewIcon/>}/>
+                                            <NavIconButton Icon={<MoonIcon/>}/>
                                         </span>
                                     </Box>
                 
