@@ -108,13 +108,13 @@ const Nav = ({toggleDark}) => {
 
     })
 
+    const path = useLocation().pathname
     useEffect(() => {
-        setSelected("/tasks")
+        setSelected(JSON.parse(localStorage.getItem('userData')).name == "Not Logged In" ? "/login" : path)
     }, [JSON.parse(localStorage.getItem('userData')).name])
 
     
 
-    const path = useLocation().pathname
     const defaultPath = path === "/" ? NavKeys[0].link : path
     const [selected,setSelected] = useState(defaultPath)
     
@@ -281,6 +281,7 @@ const Nav = ({toggleDark}) => {
                                     <span onClick={() => {
                                             SetData({...data, name:"Not Logged In"})
                                             window.location.reload()
+                                            
                                         }}>
                                         <NavIconButton Icon={<LogoutOutlined />}/>
                                     </span>
