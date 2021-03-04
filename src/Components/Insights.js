@@ -1,7 +1,5 @@
 import {React, useState, useEffect, useContext} from 'react'
-import {Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, NumberInput} from "@chakra-ui/react"
-import {Menu, MenuButton, MenuList, MenuItem} from "@chakra-ui/react"
-import {ChevronDownIcon} from "@chakra-ui/icons"
+import {CheckIcon} from "@chakra-ui/icons"
 import {IconButton, Container, Heading, Button, useDisclosure, FormControl, FormLabel, Textarea, NumberInputField} from "@chakra-ui/react"
 import {userData} from './MockData';
 import SideNav from "./SideNav"
@@ -18,7 +16,7 @@ import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied'
 
 const useStyles = makeStyles({
   root: {
-    width: 300,
+    width: 400,
   },
   input: {
     width: 42,
@@ -78,8 +76,6 @@ const Insights = () => {
 
   return (
     <div id="zen-body">
-      <div style={{alignItems:"center", justifyContent:"space-between", margin:"auto"}}>
-
         <Heading size="xl" style={{marginBottom:"30px", color: ""}}>Insights</Heading>
         <Button colorScheme="purple" style={{marginBottom: "30px"}}>
             Generate Insights
@@ -87,28 +83,34 @@ const Insights = () => {
         <br></br>
         <Input type="date" value={dateStringForm} style={{width:"200px", marginBottom: "30px"}} onChange = {e => setDateStringForm(e.target.value)}/>
         <br></br>
-        <div className={classes.root}>
-          <Typography id="discrete-slider" gutterBottom>
+        <Typography id="discrete-slider" gutterBottom>
             Indicate your happiness level below:
-          </Typography>
-          <Slider
-            defaultValue={5}
-            getAriaValueText={valuetext}
-            aria-labelledby="discrete-slider"
-            valueLabelDisplay="auto"
-            step={1}
-            marks
-            min={0}
-            max={10}
-          />
+        </Typography>
+        <br></br>
+        <div style={{margin: "0px auto", textAlign: "center"}}>
+          <div className={classes.root} style={{display: "inline-block"}}>
+            <Slider
+              defaultValue={5}
+              getAriaValueText={valuetext}
+              aria-labelledby="discrete-slider"
+              valueLabelDisplay="auto"
+              step={1}
+              marks
+              min={0}
+              max={10}
+              style={{display: "inline-block"}}
+            />
+            <div style={{width: "100%", justifyContent: "space-between"}}>
+              <SentimentVeryDissatisfiedIcon style={{width: "25%"}}/>
+              <SentimentDissatisfiedIcon style={{width: "25%"}}/>
+              <SentimentSatisfiedIcon style={{width: "25%"}}/>
+              <MoodIcon style={{width: "25%"}}/>
+            </div>
+          </div>
+          <Button leftIcon={<CheckIcon/>} variant="solid" style={{display: "inline-block", marginLeft: "50px", marginBottom: "70px"}}>
+              Confirm
+          </Button>
         </div>
-        <div style={{width: "350px", justifyContent: "space-between"}}>
-          <SentimentVeryDissatisfiedIcon style={{marginRight: "70px"}}/>
-          <SentimentDissatisfiedIcon style={{marginRight: "65px"}}/>
-          <SentimentSatisfiedIcon style={{marginRight: "70px"}}/>
-          <MoodIcon/>
-        </div>
-      </div>
     </div>
 
   );
