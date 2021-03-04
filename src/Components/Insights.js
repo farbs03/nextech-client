@@ -84,7 +84,7 @@ const Insights = () => {
         <Input type="date" value={dateStringForm} style={{width:"200px", marginBottom: "30px"}} onChange = {e => setDateStringForm(e.target.value)}/>
         <br></br>
         <Typography id="discrete-slider" gutterBottom>
-            Indicate your happiness level below:
+            Indicate your happiness level below for today:
         </Typography>
         <br></br>
         <div style={{margin: "0px auto", textAlign: "center"}}>
