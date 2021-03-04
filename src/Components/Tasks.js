@@ -159,7 +159,7 @@ const Tasks = () => {
         <div id="zen-body">
 
 
-            <Heading size="xl" style={{marginBottom:"30px", color: "#6B46C1"}}>{`Welcome ${user.name}! (app only for those named McRib)`}</Heading>
+            <Heading size="xl" style={{marginBottom:"30px"}}>Tasks</Heading>
             <div style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
                 <DoubleLeftOutlined style={{border:"1px solid #E2E8F0", borderRadius:"5px", padding:"10px"}} onClick={() => updateDateString(-7)}/>
                 <LeftOutlined style={{border:"1px solid #E2E8F0", borderRadius:"5px", padding:"10px"}} onClick={() => updateDateString(-1)}/>
