@@ -8,6 +8,7 @@ import Tasks from './Components/Tasks'
 import Calendar from './Components/Calendar'
 import Notes from './Components/Notes'
 import Insights from './Components/Insights'
+import Login from './Components/Login'
 
 import {Box, Text, ChakraProvider, Flex, Button} from "@chakra-ui/react"
 import './App.css'
@@ -16,10 +17,11 @@ import {userData} from './Components/MockData.js';
 
 
 const App = () => {
-  if(!localStorage.getItem('userData')){
+  if(!JSON.parse(localStorage.getItem('userData'))){
     localStorage.setItem('userData', JSON.stringify(userData))
   }
   const [isDark, setDark] = useState(false)
+  
   
 
   return (
@@ -29,12 +31,15 @@ const App = () => {
           
           <SideNav toggleDark={() => setDark(!isDark)}/>
           
+
+
           <Switch>
-            <Route exact path="/tasks" component={Tasks}/>
-            <Route exact path="/study" component={ZenMode}/>
-            <Route exact path="/notes" component={Notes}/>
-            <Route exact path="/insights" component={Insights}/>
-            <Route exact path="/" component={Tasks}/>
+            <Route exact path="/tasks" component={JSON.parse(localStorage.getItem('userData')).name == "Not Logged In" ? Login : Tasks}/>
+            <Route exact path="/study" component={JSON.parse(localStorage.getItem('userData')).name == "Not Logged In" ? Login : ZenMode}/>
+            <Route exact path="/notes" component={JSON.parse(localStorage.getItem('userData')).name == "Not Logged In" ? Login : Notes}/>
+            <Route exact path="/insights" component={JSON.parse(localStorage.getItem('userData')).name == "Not Logged In" ? Login : Insights}/>
+            <Route exact path="/login" component={JSON.parse(localStorage.getItem('userData')).name == "Not Logged In" ? Login : Tasks}/>
+            <Route exact path="/" component={JSON.parse(localStorage.getItem('userData')).name == "Not Logged In" ? Login : Tasks}/>
           </Switch>
           
         </BrowserRouter>

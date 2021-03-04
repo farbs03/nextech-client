@@ -1,5 +1,5 @@
 export const userData = {
-    "name": "McRib",
+    "name": "Not Logged In",
     "friends": ["id1", "id2"],
     "stats": {
         "happiness": 4,

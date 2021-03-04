@@ -1,22 +1,16 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Link, useLocation} from 'react-router-dom'
 
 import {Box, Flex, Button, Image, IconButton, Avatar, Text, Spacer, Center, useTimeout} from "@chakra-ui/react"
 import {  Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure } from "@chakra-ui/react"
 import {LinkOverlay, LinkBox} from "@chakra-ui/react"
 import {CheckIcon, CalendarIcon, SettingsIcon, ViewIcon, StarIcon, Icon, TimeIcon, ArrowRightIcon, MoonIcon} from "@chakra-ui/icons"
-import {PaperClipOutlined} from "@ant-design/icons"
+import {PaperClipOutlined, LogoutOutlined } from "@ant-design/icons"
 import useMedia from '../hooks/useMedia'
 
 import logo from "../logo2.png"
 
-const NavKeys = [
-    {name: "Tasks Manager", icon: CheckIcon, link: "/tasks"},
-    {name: "Study Mode", icon: TimeIcon, link: "/study"},
-    {name: "Notes", icon: PaperClipOutlined, link: "/notes"},
-    {name: "Insights", icon: StarIcon, link: "/insights"}
-    // {name: "Settings", icon: SettingsIcon}
-]
+
 
 
 const NavButton = ({name, selected, onClick, Icon, link}) => {
@@ -61,30 +55,83 @@ const NavIconButton = ({Icon, selected}) => {
 }
 
 const Nav = ({toggleDark}) => {
-    const path = useLocation().pathname
-    const defaultPath = path === "/" ? "/tasks" : path
-    const [selected,setSelected] = useState(defaultPath)
     const { isOpen, onOpen, onClose } = useDisclosure()
-
+    
     const onSelectedChange = (key) => {
         setSelected(key.link);
         onClose()
     }
+    
+    const [data, SetData] = useState(JSON.parse(localStorage.getItem('userData')))
+    
+    
+        useEffect(() => {
+    
+            localStorage.setItem('userData', JSON.stringify(data))
+            return () => {
+                localStorage.setItem('userData', JSON.stringify(data))
+            }
+        }, [data])
+        
+    
+    let NavKeys =[]    
 
+    if(data.name != "Not Logged In"){
+        NavKeys = [
+            {name: "Tasks Manager", icon: CheckIcon, link: "/tasks"},
+            {name: "Study Mode", icon: TimeIcon, link: "/study"},
+            {name: "Notes", icon: PaperClipOutlined, link: "/notes"},
+            {name: "Insights", icon: StarIcon, link: "/insights"}
+            // {name: "Settings", icon: SettingsIcon}
+        ]
+    } else {
+        NavKeys = [
+            {name: "Login", icon: CheckIcon, link: "/login"},
+        ]
+    }
+
+    useEffect(() => {
+        if(data.name != "Not Logged In"){
+            NavKeys = [
+                {name: "Tasks Manager", icon: CheckIcon, link: "/tasks"},
+                {name: "Study Mode", icon: TimeIcon, link: "/study"},
+                {name: "Notes", icon: PaperClipOutlined, link: "/notes"},
+                {name: "Insights", icon: StarIcon, link: "/insights"}
+                // {name: "Settings", icon: SettingsIcon}
+            ]
+        } else {
+            NavKeys = [
+                {name: "Login", icon: CheckIcon, link: "/login"},
+            ]
+        }
+        
+
+    })
+
+    useEffect(() => {
+        setSelected("/tasks")
+    }, [JSON.parse(localStorage.getItem('userData')).name])
+
+    
+
+    const path = useLocation().pathname
+    const defaultPath = path === "/" ? NavKeys[0].link : path
+    const [selected,setSelected] = useState(defaultPath)
+    
     const studyMode = path == '/study' ? true : false
     const mobile = useMedia(['(min-width: 750px)', '(max-width: 750px)'], [false, true])
-
+    
     if(!mobile && !studyMode){
-
+        
         return(
-
+            
             <Flex 
-                direction="column"
-                alignItems="center"
-                justifyContent="space-between"
-                w={275}
-                background="white" 
-                style={{boxShadow: "2px 0px 12px rgba(0,0,0,0.1)"}}
+            direction="column"
+            alignItems="center"
+            justifyContent="space-between"
+            w={275}
+            background="white" 
+            style={{boxShadow: "2px 0px 12px rgba(0,0,0,0.1)"}}
             > 
 
                 <Flex
@@ -129,12 +176,18 @@ const Nav = ({toggleDark}) => {
                 >   
                     <Flex>
                         <Avatar bg="purple.500" size="xs" mr="2" ml="2"/>
-                        <Text fontWeight="500">Preston</Text>
+                        <Text fontWeight="500">{data.name}</Text>
                     </Flex>
 
 
                     <Box>
-                        <NavIconButton Icon={<SettingsIcon/>}/>
+                        <span onClick={() => {
+                            SetData({...data, name:"Not Logged In"})
+                            window.location.reload()
+                            }}>
+                            <NavIconButton Icon={<LogoutOutlined />}/>
+                            
+                        </span>
                         <span onClick={() => toggleDark()}>
                             <NavIconButton Icon={<MoonIcon/>}/>
                         </span>
@@ -220,12 +273,17 @@ const Nav = ({toggleDark}) => {
                                         ml="5%"
                                     >
                                         <Avatar bg="purple.500" size="xs" mr="2" ml="2"/>
-                                        <Text fontWeight="500">Preston</Text>
+                                        <Text fontWeight="500">{data.name}</Text>
                                     </Flex>
 
                                     
                                     <Box>
-                                        <NavIconButton Icon={<SettingsIcon/>}/>
+                                    <span onClick={() => {
+                                            SetData({...data, name:"Not Logged In"})
+                                            window.location.reload()
+                                        }}>
+                                        <NavIconButton Icon={<LogoutOutlined />}/>
+                                    </span>
                                         <span onClick={() => toggleDark()}>
                                             <NavIconButton Icon={<MoonIcon/>}/>
                                         </span>
