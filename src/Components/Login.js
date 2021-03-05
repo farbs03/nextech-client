@@ -44,7 +44,7 @@ const Login = () => {
                         <FormLabel fontSize="2xl" >Username</FormLabel>
                         <Input onChange={(e) => {{
                             setUsername(e.target.value)
-                        }}}  placeholder="Usrname" value={username}/>
+                        }}}  placeholder="Username" value={username}/>
 
                         <Stack mt="50px">
                             <FormLabel mt="50px" fontSize="2xl" >Password</FormLabel>

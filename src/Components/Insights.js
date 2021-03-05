@@ -13,6 +13,9 @@ import MoodIcon from '@material-ui/icons/Mood';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
 import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 const useStyles = makeStyles({
   root: {
@@ -23,6 +26,12 @@ const useStyles = makeStyles({
   },
 });
 
+function valuetext(value) {
+  return `${value}`;
+}
+
+const progress = []
+
 const Insights = () => {
   
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('userData')))
@@ -32,59 +41,86 @@ const Insights = () => {
   const [dateString, setDateString] = useState(date.toISOString().split("T")[0]);
   const [dateStringForm, setDateStringForm] = useState(date.toISOString().split("T")[0]);
   const classes = useStyles();
-  const [value, setValue] = useState(5);
+  const [happiness, setHappiness] = useState(5);
+  const [count, setCount] = useState(0);
 
-  function valuetext(value) {
-    return `${value}°C`;
-  }
-
-  const handleInputChange = (event) => {
-    setValue(event.target.value === '' ? '' : Number(event.target.value));
-  };
-
-  const handleBlur = () => {
-    if (value < 0) {
-      setValue(0);
-    } else if (value > 10) {
-      setValue(10);
+  useEffect(() => {
+    const formDate = new Date(dateStringForm)
+    if (formDate) {
+        setDateString(formDate.toISOString().split("T")[0])
     }
-  };
-
-  const handlePredictClick = (event) => {
-    const formData = this.user;
-    fetch('http://127.0.0.1:5000/prediction/', 
-      {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify(formData)
-      })
-      .then(response => response.json())
-      .then(response => {
-        setResult(response.result)
-        setLoading(false);
-      });
+  }, [dateStringForm])
+  
+  const handleSliderChange = (e, newValue) => {
+    setHappiness(newValue);
   }
 
-  const handleCancelClick = (event) => {
-    this.setState(
-      { result: "" }
-    );
-  }
+  const updateHappinessScore = (e) => {
+    const date = JSON.stringify({dateStringForm})
+    const formattedDate = date.slice(19, 29)
+    const happyScore = JSON.stringify({happiness})
+    const formattedHappiness = parseInt(happyScore.slice(13, happyScore.length - 1))
+    const newData = {
+      Date: formattedDate,
+      Work: 0,
+      School: 0,
+      Life: 0,
+      Exercise: 0,
+      Happiness: formattedHappiness
+    }
+    for(const i in user.workTasks) {
+      newData[user.workTasks[i]["tag"]]++;
+    }
+
+    const newArr = user.stats
+
+    var isUnique = true
+    for(const i in newArr.days) {
+      if(newData["Date"] === newArr.days[i]["Date"]) {
+        newArr.days[i] = newData
+        isUnique = false
+      }
+    }
+    if(isUnique) {
+      newArr.days.push(newData)
+    }
+    setCount(newArr.days.length)
+    setUser({...user, stats: newArr})
+    console.log(user.stats.days)
+}
+
+const handlePredictClick = () => {
+  const formData = user.stats.days
+  setLoading(true)
+  fetch('http://127.0.0.1:5000/', 
+    {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(response => {
+      setTimeout(() => setLoading(false), 500)
+      setResult(response.result)
+    });
+}
 
   return (
     <div id="zen-body">
         <Heading size="xl" style={{marginBottom:"30px", color: ""}}>Insights</Heading>
-        <Button colorScheme="purple" style={{marginBottom: "30px"}}>
-            Generate Insights
+        <Button colorScheme="purple" style={{marginBottom: "30px"}} onClick={handlePredictClick}>
+            Generate Insights ({count})
         </Button>
-        <br></br>
-        <Input type="date" value={dateStringForm} style={{width:"200px", marginBottom: "30px"}} onChange = {e => setDateStringForm(e.target.value)}/>
         <br></br>
         <Typography id="discrete-slider" gutterBottom>
             Indicate your happiness level below for today:
+        </Typography>
+        <br></br>
+        <Typography style={{fontWeight: "bold", textAlign: ""}}>
+            Current happiness: {happiness}
         </Typography>
         <br></br>
         <div style={{margin: "0px auto", textAlign: "center"}}>
@@ -99,6 +135,7 @@ const Insights = () => {
               min={0}
               max={10}
               style={{display: "inline-block"}}
+              onChange={handleSliderChange}
             />
             <div style={{width: "100%", justifyContent: "space-between"}}>
               <SentimentVeryDissatisfiedIcon style={{width: "25%"}}/>
@@ -107,9 +144,17 @@ const Insights = () => {
               <MoodIcon style={{width: "25%"}}/>
             </div>
           </div>
-          <Button leftIcon={<CheckIcon/>} variant="solid" style={{display: "inline-block", marginLeft: "50px", marginBottom: "70px"}}>
+          <Button leftIcon={<CheckIcon/>}  onClick={(e) => updateHappinessScore()} variant="solid" style={{display: "inline-block", marginLeft: "50px", marginBottom: "70px"}}>
               Confirm
           </Button>
+        </div>
+        <Backdrop open={loading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        <div>
+        {result === "" ? null :
+            <h5>{result}</h5>
+        }
         </div>
     </div>
 

@@ -2,10 +2,10 @@ export const userData = {
     "name": "Not Logged In",
     "friends": ["id1", "id2"],
     "stats": {
-        "happiness": 4,
         "overtime": 120,
         "pushedToNextDay": 4,
-        "activeDays": 10
+        "activeDays": 10,
+        "days": []
     },
     "lifeTasks": [
         {
