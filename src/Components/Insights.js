@@ -92,7 +92,7 @@ const Insights = () => {
 const handlePredictClick = () => {
   const formData = user.stats.days
   setLoading(true)
-  fetch('http://127.0.0.1:5000/', 
+  fetch('https://incentiva-backend.herokuapp.com/', 
     {
       headers: {
         'Accept': 'application/json',
