@@ -2,17 +2,22 @@ import React, {useState, useEffect, useContext} from 'react'
 
 import {userData} from './MockData';
 
-import { CircularProgress, CircularProgressLabel, IconButton, Container, Input } from "@chakra-ui/react"
+import { CircularProgress, CircularProgressLabel, IconButton, Container, Input, Button, useRadioGroup, RadioCard, HStack, RadioGroup } from "@chakra-ui/react"
 import {StepForwardOutlined,StepBackwardOutlined, RetweetOutlined, CheckOutlined, PauseOutlined, CaretRightOutlined, ArrowUpOutlined, ArrowDownOutlined} from '@ant-design/icons'
-
+import { RepeatClockIcon } from '@chakra-ui/icons'
 
 
 const ZenMode = () => {
-
-    const [t, setT] = useState(3600)
+    const CountData = {
+        "Work": 2700,
+        "Short Break": 300,
+        "Long Break": 900
+    }
+    
+    const [selected, setSelected] = useState("Work")
+    const [t, setT] = useState(CountData["Work"])
     const [paused, setPaused] = useState(false)
     const [active, setActive] = useState(true) //whether buttons are active
-
 
     useEffect(() => {
         const screen = document.documentElement;
@@ -25,10 +30,14 @@ const ZenMode = () => {
     useEffect(() => {
         if (!paused) {
             if (t!=0) {
-                setTimeout(() => {
+                let timer = setTimeout(() => {
                     setT(t => t-1)
                 }, 1000)
+                return () => clearTimeout(timer)
             }
+        }
+        else {
+            setT(CountData[selected])
         }
     }, [t, paused])
 
@@ -38,6 +47,9 @@ const ZenMode = () => {
         }
     }, [paused])
 
+    useEffect(() => {
+        setT(CountData[selected])
+    }, [selected])
 
 
     const timeString = (t) => {
@@ -74,14 +86,7 @@ const ZenMode = () => {
             }
         }
     }
-    const skipButton = (inc, size) => (
-        <IconButton
-            icon={<div style={{fontSize:"20px"}}>{inc>0? "+": ""}{inc}</div>}
-            onClick={() => {if (active) {addMin(inc)}}}
-            colorScheme="blue"
-            isRound style={active? {width: size, height: size} : {width: size, height: size, backgroundColor: "gray"}}
-        />
-    )
+
       
     
 
@@ -96,12 +101,13 @@ const ZenMode = () => {
 
 
 
+
     return (
         <div id="zen-body">
 
             {/* Timer */}
             <div style={{display:"flex", justifyContent:"center", alignItems:"center", margin:"20px 0 40px 0"}}>
-                <CircularProgress value={t/36} className="home-progress" size="400px" thickness="5px" color="purple.500">
+                <CircularProgress value={t/(CountData[selected] / 100)} className="home-progress" size="400px" thickness="5px" color="purple.500">
                     <CircularProgressLabel style={{display:'flex', justifyContent:"center", fontSize:"60px"}}>
                         {paused?
                             <Input 
@@ -129,9 +135,8 @@ const ZenMode = () => {
             </div>
             
 
-            <div style={{display:"flex", justifyContent:"space-evenly", alignItems:"center", margin:"20px 0 40px 0", width:"100%"}}>
-                {skipButton(-15, "60px")}
-                {skipButton(-5, "70px")}
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center", margin:"20px 0 40px 0", width:"100%"}}>
+
                 <IconButton
                     icon={paused?
                         <CaretRightOutlined style={{fontSize:"30px", marginLeft:"4px", transform: "scaleX(1.3)"}}/>
@@ -147,8 +152,65 @@ const ZenMode = () => {
                         setPaused(!paused)
                     }}
                 />
-                {skipButton(5, "70px")}
-                {skipButton(+15, "60px")}
+                
+                <Button 
+                    colorScheme="blue" 
+                    size="lg"
+                    style={{borderRadius: "50%"}}
+                    h="80px"
+                    w="80px"
+                    ml="120px"
+                    isDisabled={paused}
+                    onClick={() => {
+                        setT(CountData[selected])
+                        
+                    }}
+                >
+                <RepeatClockIcon w="30px" h="45px"  />
+                
+            </Button>
+
+            </div>
+
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center", margin:"20px 0 40px 0", width:"100%"}}>
+
+                <RadioGroup>
+                    <HStack>
+                        <Button 
+                            h="50px"
+                            colorScheme={selected == "Work" ? "blue" : "gray"}
+                            onClick={() =>{
+                                setSelected("Work")
+                                
+                            }}
+                            >
+                            Work
+                            
+                        </Button>
+                        <Button 
+                            h="50px"
+                            colorScheme={selected == "Short Break" ? "blue" : "gray"}
+                            onClick={() =>{
+                                setSelected("Short Break")
+                                
+                            }}
+                        >
+                        Short Break
+                        </Button>
+    
+                        <Button 
+                            h="50px"
+                            colorScheme={selected == "Long Break" ? "blue" : "gray"}
+                            onClick={() =>{
+                                setSelected("Long Break")
+                                
+                            }}
+                        >
+                        Long Break
+                        </Button>
+    
+                    </HStack>
+                </RadioGroup>
             </div>
 
         </div>
