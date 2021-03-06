@@ -5,7 +5,17 @@ export const userData = {
         "overtime": 120,
         "pushedToNextDay": 4,
         "activeDays": 10,
-        "days": []
+        "days": [
+            {
+                "Date": "2021-02-09",
+                "Work": 1,
+                "School": 1,
+                "Life": 1,
+                "Exercise": 0,
+                "Happiness": 5,
+            },
+        ],
+        "length": 0
     },
     "lifeTasks": [
         {

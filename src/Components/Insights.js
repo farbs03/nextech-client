@@ -1,4 +1,4 @@
-import {React, useState, useEffect, useContext} from 'react'
+import {React, useState, useEffect, useContext, PureComponent} from 'react'
 import {CheckIcon} from "@chakra-ui/icons"
 import {IconButton, Container, Heading, Button, useDisclosure, FormControl, FormLabel, Textarea, NumberInputField} from "@chakra-ui/react"
 import {userData} from './MockData';
@@ -8,29 +8,33 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
-import Tooltip from '@material-ui/core/Tooltip';
 import MoodIcon from '@material-ui/icons/Mood';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
 import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Graphs from "./Graphs"
+import HappinessGraph from "./HappinessGraph"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: 400,
   },
   input: {
     width: 42,
   },
-});
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
+}));
 
 function valuetext(value) {
   return `${value}`;
 }
-
-const progress = []
 
 const Insights = () => {
   
@@ -42,7 +46,7 @@ const Insights = () => {
   const [dateStringForm, setDateStringForm] = useState(date.toISOString().split("T")[0]);
   const classes = useStyles();
   const [happiness, setHappiness] = useState(5);
-  const [count, setCount] = useState(0);
+  var [count, setCount] = useState(user.stats.days.length);
 
   useEffect(() => {
     const formDate = new Date(dateStringForm)
@@ -50,7 +54,15 @@ const Insights = () => {
         setDateString(formDate.toISOString().split("T")[0])
     }
   }, [dateStringForm])
-  
+
+  useEffect(() => {
+
+    localStorage.setItem('userData', JSON.stringify(user))
+    return () => {
+        localStorage.setItem('userData', JSON.stringify(user))
+    }
+  }, [user])
+
   const handleSliderChange = (e, newValue) => {
     setHappiness(newValue);
   }
@@ -66,27 +78,30 @@ const Insights = () => {
       School: 0,
       Life: 0,
       Exercise: 0,
-      Happiness: formattedHappiness
+      Happiness: formattedHappiness,
     }
     for(const i in user.workTasks) {
       newData[user.workTasks[i]["tag"]]++;
     }
 
     const newArr = user.stats
+    const days = user.days
 
     var isUnique = true
-    for(const i in newArr.days) {
-      if(newData["Date"] === newArr.days[i]["Date"]) {
+    for(const i in days) {
+      if(newData["Date"] == days[i]["date"]) {
         newArr.days[i] = newData
         isUnique = false
       }
     }
     if(isUnique) {
       newArr.days.push(newData)
+      console.log("HI")
     }
     setCount(newArr.days.length)
     setUser({...user, stats: newArr})
     console.log(user.stats.days)
+    setResult("")
 }
 
 const handlePredictClick = () => {
@@ -103,7 +118,7 @@ const handlePredictClick = () => {
     })
     .then(response => response.json())
     .then(response => {
-      setTimeout(() => setLoading(false), 500)
+      setTimeout(() => setLoading(false), 200)
       setResult(response.result)
     });
 }
@@ -148,14 +163,26 @@ const handlePredictClick = () => {
               Confirm
           </Button>
         </div>
-        <Backdrop open={loading}>
+        <Backdrop className={classes.backdrop} open={loading}>
           <CircularProgress color="inherit" />
         </Backdrop>
-        <div>
-        {result === "" ? null :
-            <h5>{result}</h5>
+        {result == "" ? null :
+          <div style={{width: "80%", marginRight: "auto", marginLeft: "auto"}}>
+            <div style={{textAlign: "center"}}>
+              <h2 style={{fontSize: "20px"}}>{result}</h2>
+            </div>
+            <br></br>
+            <h2 style={{fontWeight: "bold", textAlign: "center"}}>Analytics:</h2>
+            <br></br>
+            <br></br>
+            <div style={{width: "45%", display: "inline-block", marginRight: "20px"}}>
+              <Graphs data={user.stats.days}/>
+            </div>
+            <div style={{width: "45%", display: "inline-block", marginLeft: "20px"}}>
+              <HappinessGraph data={user.stats.days}/>
+            </div>
+          </div>
         }
-        </div>
     </div>
 
   );
