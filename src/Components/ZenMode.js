@@ -143,7 +143,7 @@ const ZenMode = () => {
                     :
                         <PauseOutlined style={{fontSize:"30px"}}/>
                     }
-                    colorScheme="blue"
+                    colorScheme="purple"
                     isRound style={active? {width: "80px", height: "80px"} : {width: "80px", height: "80px", backgroundColor: "gray"}}
                     onClick={() => {
                         if (paused) {
@@ -154,7 +154,7 @@ const ZenMode = () => {
                 />
                 
                 <Button 
-                    colorScheme="blue" 
+                    colorScheme="purple" 
                     size="lg"
                     style={{borderRadius: "50%"}}
                     h="80px"
@@ -178,7 +178,7 @@ const ZenMode = () => {
                     <HStack>
                         <Button 
                             h="50px"
-                            colorScheme={selected == "Work" ? "blue" : "gray"}
+                            colorScheme={selected == "Work" ? "purple" : "gray"}
                             onClick={() =>{
                                 setSelected("Work")
                                 
@@ -189,7 +189,7 @@ const ZenMode = () => {
                         </Button>
                         <Button 
                             h="50px"
-                            colorScheme={selected == "Short Break" ? "blue" : "gray"}
+                            colorScheme={selected == "Short Break" ? "purple" : "gray"}
                             onClick={() =>{
                                 setSelected("Short Break")
                                 
@@ -200,7 +200,7 @@ const ZenMode = () => {
     
                         <Button 
                             h="50px"
-                            colorScheme={selected == "Long Break" ? "blue" : "gray"}
+                            colorScheme={selected == "Long Break" ? "purple" : "gray"}
                             onClick={() =>{
                                 setSelected("Long Break")
                                 

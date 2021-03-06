@@ -55,7 +55,7 @@ const Login = () => {
                             
 
                         <Stack>
-                            <Button style={{margin: "auto", marginTop:"30px"}}  w="25%"  colorScheme="blue" onClick={() =>{
+                            <Button style={{margin: "auto", marginTop:"30px", background:"#805AD5"}}  w="25%"  colorScheme="blue" onClick={() =>{
                                 if (username == "User" && password == "password"){
                                     setData({...data, name:"Demo User"})
                                     window.location.reload()
